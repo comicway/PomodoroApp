@@ -1,16 +1,20 @@
 import { useState } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { format } from 'date-fns';
+import useSound from 'use-sound';
+import alarmSound from './microwave-timer.mp3';
 
 const PomodoroTimer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [key, setKey] = useState(0); // Para reiniciar el temporizador
   
   // Duración en segundos (25 minutos)
-  const POMODORO_DURATION = 25 * 60;
+  const POMODORO_DURATION = 1 * 60;
+
+  const [play] = useSound(alarmSound);
 
   const handleComplete = () => {
-    // Reproducir sonido al finalizar
+    play(); // Reproducir sonido al finalizar
     setIsPlaying(false);
     return [true, 1000]; // Reiniciar después de 1 segundo
   };
