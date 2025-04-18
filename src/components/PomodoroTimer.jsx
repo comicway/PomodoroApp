@@ -7,6 +7,7 @@ import alarmSound from './microwave-timer.mp3';
 const PomodoroTimer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [key, setKey] = useState(0); // Para reiniciar el temporizador
+  const [tasks, setTasks] = useState([]);
   
   // Duración en segundos (25 minutos)
   const POMODORO_DURATION = 1 * 60;
@@ -23,11 +24,20 @@ const PomodoroTimer = () => {
     return format(new Date(seconds * 1000), 'mm:ss');
   };
 
+  const handleTask = (e) => {
+    e.preventDefault();
+    const newTask = e.target[0].value;
+    if (newTask) {
+      setTasks([...tasks, newTask]);
+      e.target[0].value = '';
+    }
+  };
+
   return (
     <>
-      <div className="container mx-auto">
-        <div className='grid grid-cols-1'>
-          <h1>Pomodoro Timer</h1>
+      <div className="container">
+        <div className='grid grid-cols-1 gap-5'>
+          <h1 className='mx-auto'>Pomodoro Timer</h1>
           <CountdownCircleTimer
             key={key}
             isPlaying={isPlaying}
@@ -58,7 +68,14 @@ const PomodoroTimer = () => {
         </div>
       </div>
       <div>
-        <h1>HOLASAAA</h1>
+        <form onSubmit={handleTask}>
+          <input type="text" placeholder="Ingrese una nueva tarea" />
+        </form>
+        <ul>
+          {tasks.map((task, index) => (
+            <li key={index}>{task}</li>
+          ))}
+        </ul>
       </div>
     </>
   );
