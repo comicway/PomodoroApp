@@ -73,7 +73,10 @@ const PomodoroTimer = () => {
         </form>
         <ul>
           {tasks.map((task, index) => (
-            <li key={index}>{task}</li>
+            <li key={index}>{task}
+              <div><button onClic={() => setTasks(tasks)}>Eliminar</button></div>
+              <div><button>Lista</button></div>
+            </li>
           ))}
         </ul>
       </div>
