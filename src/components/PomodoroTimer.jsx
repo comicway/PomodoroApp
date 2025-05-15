@@ -8,7 +8,6 @@ const PomodoroTimer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [key, setKey] = useState(0); // Para reiniciar el temporizador
   const [tasks, setTasks] = useState([]);
-  const [completedTasks, setCompletedTasks] = useState(0);
   
   // Duración en segundos (25 minutos)
   const POMODORO_DURATION = 1 * 60;
@@ -18,6 +17,8 @@ const PomodoroTimer = () => {
   const handleComplete = () => {
     play(); // Reproducir sonido al finalizar
     setIsPlaying(false);
+    const completePomodoro = 0;
+    console.log(completePomodoro + 1);
     return [true, 1000]; // Reiniciar después de 1 segundo
   };
 
@@ -84,8 +85,8 @@ const PomodoroTimer = () => {
         </form>
         <ul>
           {tasks.map((task, index) => (
-            <li key={index} className={task.completed ? 'border-4 bg-fondobtnmenu' : 'border'}>
-              {task.text}
+            <li key={index}>
+              <p className={task.completed ? 'line-through' : ''}>{task.text}</p>
               <div><button onClick={() => handleDeleteTask(index)}>Eliminar</button></div>
               <div><button onClick={() => handleTaskCompletion(index)}>Realizada</button></div>
             </li>
