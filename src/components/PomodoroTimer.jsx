@@ -76,6 +76,7 @@ const PomodoroTimer = () => {
                     Reiniciar
                   </button>
                 </div>
+                {completePomodoro}
               </div>
             )}
           </CountdownCircleTimer>
