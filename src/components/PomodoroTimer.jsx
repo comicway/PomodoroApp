@@ -8,6 +8,7 @@ const PomodoroTimer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [key, setKey] = useState(0); // Para reiniciar el temporizador
   const [tasks, setTasks] = useState([]);
+  const [completePomodoro, setCompletePomodoro] = useState(0);
   
   // Duración en segundos (25 minutos)
   const POMODORO_DURATION = 1 * 60;
@@ -17,8 +18,9 @@ const PomodoroTimer = () => {
   const handleComplete = () => {
     play(); // Reproducir sonido al finalizar
     setIsPlaying(false);
-    const completePomodoro = 0;
-    console.log(completePomodoro + 1);
+    setCompletePomodoro(completePomodoro + 1);
+    console.log('Pomodoro completado');
+    console.log(completePomodoro);
     return [true, 1000]; // Reiniciar después de 1 segundo
   };
 
@@ -74,6 +76,7 @@ const PomodoroTimer = () => {
                     Reiniciar
                   </button>
                 </div>
+                {completePomodoro}
               </div>
             )}
           </CountdownCircleTimer>
