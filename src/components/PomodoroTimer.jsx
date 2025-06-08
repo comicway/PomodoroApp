@@ -19,8 +19,6 @@ const PomodoroTimer = () => {
     play(); // Reproducir sonido al finalizar
     setIsPlaying(false);
     setCompletePomodoro(completePomodoro + 1);
-    console.log('Pomodoro completado');
-    console.log(completePomodoro);
     return [true, 1000]; // Reiniciar después de 1 segundo
   };
 
@@ -51,7 +49,7 @@ const PomodoroTimer = () => {
     <>
       <div className="container">
         <div className='grid grid-cols-1 gap-5'>
-          <h1 className='mx-auto'>Pomodoro Timer</h1>
+          <h1 className='mx-auto'>Pom odoro Timer</h1>
           <CountdownCircleTimer
             key={key}
             isPlaying={isPlaying}
