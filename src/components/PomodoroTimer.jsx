@@ -9,7 +9,9 @@ const PomodoroTimer = () => {
   const [key, setKey] = useState(0); // Para reiniciar el temporizador
   const [tasks, setTasks] = useState([]);
   const [completePomodoro, setCompletePomodoro] = useState(0);
-  
+
+  console.log('El pomodoro esta activo o no:', isPlaying);
+
   // Duración en segundos (25 minutos)
   const POMODORO_DURATION = 1 * 60;
 
@@ -19,8 +21,6 @@ const PomodoroTimer = () => {
     play(); // Reproducir sonido al finalizar
     setIsPlaying(false);
     setCompletePomodoro(completePomodoro + 1);
-    console.log('Pomodoro completado');
-    console.log(completePomodoro);
     return [true, 1000]; // Reiniciar después de 1 segundo
   };
 
@@ -42,7 +42,7 @@ const PomodoroTimer = () => {
   };
 
   const handleTaskCompletion = (indexToComplete) => {
-    setTasks(tasks.map((task, index) => 
+    setTasks(tasks.map((task, index) =>
       index === indexToComplete ? { ...task, completed: !task.completed } : task
     ));
   };
@@ -57,7 +57,7 @@ const PomodoroTimer = () => {
             isPlaying={isPlaying}
             duration={POMODORO_DURATION}
             colors={['#00ff00', '#ffff00', '#ff0000']}
-            colorsTime={[POMODORO_DURATION, POMODORO_DURATION/2, 0]}
+            colorsTime={[POMODORO_DURATION, POMODORO_DURATION / 2, 0]}
             onComplete={handleComplete}
             size={300}
             strokeWidth={15}
@@ -72,7 +72,7 @@ const PomodoroTimer = () => {
                   <button onClick={() => {
                     setKey(prev => prev + 1);
                     setIsPlaying(false);
-                  }}>
+                  }} style={{ isPlaying ? display: 'none' : 'block' }}>
                     Reiniciar
                   </button>
                 </div>
