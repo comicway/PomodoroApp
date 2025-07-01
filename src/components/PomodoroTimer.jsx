@@ -72,7 +72,7 @@ const PomodoroTimer = () => {
                   <button onClick={() => {
                     setKey(prev => prev + 1);
                     setIsPlaying(false);
-                  }} style={{ display: isPlaying ? 'none' : 'block' }}>
+                  }} style={{ display: isPlaying ? 'block' : 'none' }}>
                     Reiniciar
                   </button>
                 </div>
