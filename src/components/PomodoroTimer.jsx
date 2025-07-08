@@ -12,10 +12,11 @@ const PomodoroTimer = () => {
   const [completePomodoroTask, setCompletePomodoroTask] = useState(0);
 
   console.log('El pomodoro esta activo o no:', isPlaying);
-  console.log('El pomodoro de la tarea esta en:', completePomodoroTask);
+  console.log('El pomodoro total en:', completePomodoro);
+  console.log('El pomodoro de la tarea esta en:', tasks.completePomodoroTask);
 
-  // Duración en segundos (25 minutos)
-  const POMODORO_DURATION = 1 * 60;
+  // Duración en segundos (25 minutos = 25 * 60)
+  const POMODORO_DURATION = 1 * 1;
 
   const [play] = useSound(alarmSound);
 
@@ -23,8 +24,8 @@ const PomodoroTimer = () => {
     play(); // Reproducir sonido al finalizar
     setIsPlaying(false);
     setCompletePomodoro(completePomodoro + 1);
-    if (tasks.completed) {
-      setCompletePomodoroTask(completePomodoroTask + 1);
+    if (tasks.completed === false) {
+      setCompletePomodoroTask(tasks.completePomodoroTask + 1);
     } 
     return [true, 1000]; // Reiniciar después de 1 segundo
   };
@@ -37,7 +38,7 @@ const PomodoroTimer = () => {
     e.preventDefault();
     const newTask = e.target[0].value;
     if (newTask) {
-      setTasks([...tasks, { text: newTask, completed: false, completePomodoroTask: 0 },]);
+      setTasks([...tasks, { text: newTask, completed: false, completePomodoroTask},]);
       e.target[0].value = '';
     }
   };
