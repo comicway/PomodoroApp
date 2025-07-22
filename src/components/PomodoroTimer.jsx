@@ -11,10 +11,6 @@ const PomodoroTimer = () => {
   const [completePomodoro, setCompletePomodoro] = useState(0);
   const [completePomodoroTask, setCompletePomodoroTask] = useState(0);
 
-  console.log('El pomodoro esta activo o no:', isPlaying);
-  console.log('El pomodoro total en:', completePomodoro);
-  console.log('El pomodoro de la tarea esta en:', tasks.completePomodoroTask);
-
   // Duración en segundos (25 minutos = 25 * 60)
   const POMODORO_DURATION = 1 * 1;
 
@@ -24,9 +20,6 @@ const PomodoroTimer = () => {
     play(); // Reproducir sonido al finalizar
     setIsPlaying(false);
     setCompletePomodoro(completePomodoro + 1);
-    if (tasks.completed === false) {
-      setCompletePomodoroTask(tasks.completePomodoroTask + 1);
-    } 
     return [true, 1000]; // Reiniciar después de 1 segundo
   };
 
@@ -53,9 +46,13 @@ const PomodoroTimer = () => {
     ));
   };
 
+  const sumarPomodoroTask = () => {
+    setCompletePomodoroTask(tasks.map(task => task.completePomodoroTask + 1));
+  };
+
   return (
     <>
-      <div className="container">
+      <div className="container mx-auto">
         <div className='grid grid-cols-1 gap-5'>
           <h1 className='mx-auto'>Pomodoro Timer</h1>
           <CountdownCircleTimer
@@ -93,19 +90,21 @@ const PomodoroTimer = () => {
           </CountdownCircleTimer>
         </div >
       </div >
-      <div>
+      <div className="container mx-auto">
+        <div className='grid grid-cols-1 gap-5'>
         <form onSubmit={handleTask}>
           <input type="text" placeholder="Ingrese una nueva tarea" />
         </form>
         <ul>
           {tasks.map((task, index) => (
             <li key={index}>
-              <p className={task.completed ? 'line-through' : ''}>{task.text}{completePomodoroTask}</p>
+              <p className={task.completed ? 'line-through' : ''}>{task.text}</p>
               <div><button onClick={() => handleDeleteTask(index)}>Eliminar</button></div>
               <div><button onClick={() => handleTaskCompletion(index)}>Realizada</button></div>
             </li>
           ))}
         </ul>
+        </div>
       </div>
     </>
   );
