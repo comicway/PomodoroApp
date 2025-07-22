@@ -9,11 +9,10 @@ const PomodoroTimer = () => {
   const [key, setKey] = useState(0); // Para reiniciar el temporizador
   const [tasks, setTasks] = useState([]);
   const [completePomodoro, setCompletePomodoro] = useState(0);
+  const [completePomodoroTask, setCompletePomodoroTask] = useState(0);
 
-  console.log('El pomodoro esta activo o no:', isPlaying);
-
-  // Duración en segundos (25 minutos)
-  const POMODORO_DURATION = 1 * 60;
+  // Duración en segundos (25 minutos = 25 * 60)
+  const POMODORO_DURATION = 1 * 1;
 
   const [play] = useSound(alarmSound);
 
@@ -32,7 +31,7 @@ const PomodoroTimer = () => {
     e.preventDefault();
     const newTask = e.target[0].value;
     if (newTask) {
-      setTasks([...tasks, { text: newTask, completed: false }]);
+      setTasks([...tasks, { text: newTask, completed: false, completePomodoroTask},]);
       e.target[0].value = '';
     }
   };
@@ -47,32 +46,41 @@ const PomodoroTimer = () => {
     ));
   };
 
+  const sumarPomodoroTask = () => {
+    setCompletePomodoroTask(tasks.map(task => task.completePomodoroTask + 1));
+  };
+
   return (
     <>
-      <div className="container">
+      <div className="container mx-auto">
         <div className='grid grid-cols-1 gap-5'>
           <h1 className='mx-auto'>Pomodoro Timer</h1>
           <CountdownCircleTimer
             key={key}
             isPlaying={isPlaying}
             duration={POMODORO_DURATION}
-            colors={['#00ff00', '#ffff00', '#ff0000']}
+            colors={['#FF6347', '#FF6347', '#FF6347']}
             colorsTime={[POMODORO_DURATION, POMODORO_DURATION / 2, 0]}
             onComplete={handleComplete}
-            size={300}
-            strokeWidth={15}
+            size={350}
+            strokeWidth={20}
           >
             {({ remainingTime }) => (
               <div className="timer-display">
                 <span className="time">{formatTime(remainingTime)}</span>
                 <div className="controls">
-                  <button onClick={() => setIsPlaying(!isPlaying)}>
+                  <button onClick={() => {
+                    if (remainingTime === 0) {
+                      setKey(prev => prev + 1);
+                    }
+                    setIsPlaying(!isPlaying);
+                  }}>
                     {isPlaying ? 'Pausar' : 'Comenzar'}
                   </button>
                   <button onClick={() => {
                     setKey(prev => prev + 1);
                     setIsPlaying(false);
-                  }} style={{ isPlaying ? display: 'none' : 'block' }}>
+                  }} style={{ display: isPlaying ? 'block' : 'none' }}>
                     Reiniciar
                   </button>
                 </div>
@@ -80,9 +88,10 @@ const PomodoroTimer = () => {
               </div>
             )}
           </CountdownCircleTimer>
-        </div>
-      </div>
-      <div>
+        </div >
+      </div >
+      <div className="container mx-auto">
+        <div className='grid grid-cols-1 gap-5'>
         <form onSubmit={handleTask}>
           <input type="text" placeholder="Ingrese una nueva tarea" />
         </form>
@@ -95,6 +104,7 @@ const PomodoroTimer = () => {
             </li>
           ))}
         </ul>
+        </div>
       </div>
     </>
   );
